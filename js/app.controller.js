@@ -17,6 +17,7 @@ function onInit() {
         .catch(() => console.log('Error: cannot init map'));
 }
 
+
 function renderCurrLoc(loc) {
     console.log(loc);
     document.querySelector('.loc-name span').innerHTML = loc
@@ -46,9 +47,8 @@ function onGetLocs() {
 function onGetUserPos() {
     getPosition()
         .then(pos => {
-            debugger
             console.log(pos);
-            mapService.initMap(pos.coords.latitude, pos.coords.longitude);
+            mapService.initMap(renderPosList ,pos.coords.latitude, pos.coords.longitude);
         })
         .catch(err => {
             var locationError = document.getElementById("locationError");
@@ -70,27 +70,12 @@ function onGetUserPos() {
 }
 
 function onPanTo() {
-    //debugger
-    console.log('Panning the Map');
-    mapService.panTo(35.6895, 139.6917);
+    debugger
+    let keySearch =document.querySelector("[name='search-box']").value
+    mapService.getUserChosenPos(keySearch)
+        .then((res) => mapService.panTo(res.lat, res.lng)
+        )
 }
-
-
-// function renderPlaceTable(currLoc) {
-//     var gPlace = getPlaceTbale()
-//     var strHTMLs = ''
-//     strHTMLs += gPlace.map(place => {
-//         return `<tr>
-//         <td>${place.name}</td>
-//         <td>${place.lat}</td>
-//         <td>${place.lng}</td>
-//         <td onClick="onRemovePlace(${place.id})"><img src='img/close.png'></td>
-//         </tr>
-// `
-//     }).join('')
-//     document.querySelector('tbody').innerHTML = strHTMLs
-
-// }
 
 
 function renderPosList(currLoc) {

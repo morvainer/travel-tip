@@ -65,3 +65,4 @@ function _createPlaces(lat, lng, name) {
 function _savegPlaceToStorage() {
     storageService.saveToStorage(KEY, gPlaces)
 }
+
