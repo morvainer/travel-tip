@@ -42,8 +42,6 @@ function onGetUserPos() {
             debugger
             console.log(pos);
             initMap(pos.coords.latitude, pos.coords.longitude);
-
-
             //console.log('User position is:', pos.coords);
             //document.querySelector('.user-pos').innerText =
             //    `Latitude: ${pos.coords.latitude} - Longitude: ${pos.coords.longitude}`
@@ -74,7 +72,7 @@ function onPanTo() {
 
 
 function initMap(lat, lng) {
-    renderPlaceTbale()
+    //renderPlaceTbale()
     console.log('lat', lat);
     console.log('lng', lng);
     var elMap = document.querySelector('#map');
@@ -91,24 +89,28 @@ function initMap(lat, lng) {
     new google.maps.Marker({
         position: { lat, lng },
         map,
-        title: 'Hello World!'
+        title: 'your Location!'
     });
 
 
     map.addListener("click", (e) => {
-        console.log();
-        console.log();
-        debugger
         onAddPlace(e.latLng.lat(), e.latLng.lng())
         placeMarkerAndPanTo(e.latLng, map);
     });
 
-    map.addListener("click", (mapsMouseEvent) => {
-        console.log(mapsMouseEvent.latLng);
-    });
+    //map.addListener("click", (mapsMouseEvent) => {
+    //    console.log(mapsMouseEvent.latLng);
+    //});
 
 }
 
+
+function onAddPlace(lat, lng) {
+    var name = prompt('enter the place name')
+    if (!name) return
+    locService.addPlace(lat, lng, name)
+    renderPlaceTbale()
+}
 
 
 function renderPlaceTbale() {

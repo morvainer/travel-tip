@@ -1,7 +1,14 @@
 export const locService = {
     getLocs,
-    getPlaceTbale
+    getPlaceTbale,
+    addPlace
 }
+
+
+window.gPlaces = gPlaces
+
+var gPlaces =[]
+
 
 
 const locs = [
@@ -18,5 +25,13 @@ function getLocs() {
 }
 
 function getPlaceTbale(){
-    
+
+}
+
+
+function addPlace(lat, lng, name) {
+    var newPlace = createPlace(lat, lng, name);
+    debugger
+    gPlaces.unshift(newPlace)
+    _savegPlaceToStorage()
 }
