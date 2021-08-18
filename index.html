@@ -11,8 +11,8 @@
       <div class="header">
         <div class="logo">TRAVEL-TIP</div></div>
         <div class="btn-container">
-          <button class="enter-loc">Enter Location</button>
-          <button class="go-to-loc">GO</button>
+          <input type="text" class="enter-loc">Enter Location</ן>
+          <button  onclick="onPanTo()" class="go-to-loc">GO</button>
           <button  onclick="onGetUserPos()" class="my-loc">My Location</button>
         
       </div>
@@ -42,6 +42,9 @@
     <p>Locations: <span class="locs"></span></p>
     <p id="locationError"></p> -->
 
+    <script type="module" src="js/services/storage.service.js"></script>
+    <script type="module" src="js/services/loc.service.js"></script>
+    <script type="module" src="js/services/map.service.js"></script>
     <script type="module" src="js/app.controller.js"></script>
   </body>
 </html>

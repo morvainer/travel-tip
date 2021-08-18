@@ -7,12 +7,19 @@ window.onPanTo = onPanTo;
 window.onGetLocs = onGetLocs;
 window.onGetUserPos = onGetUserPos;
 console.log('hi');
+
 function onInit() {
-    mapService.initMap()
+    //debugger
+    mapService.initMap(renderCurrLoc)
         .then(() => {
             console.log('Map is ready');
         })
         .catch(() => console.log('Error: cannot init map'));
+}
+
+function renderCurrLoc(loc){
+    console.log(loc);
+    document.querySelector('.loc-name span').innerHTML = loc
 }
 
 // This function provides a Promise API to the callback-based-api of getCurrentPosition
@@ -41,10 +48,7 @@ function onGetUserPos() {
         .then(pos => {
             debugger
             console.log(pos);
-            initMap(pos.coords.latitude, pos.coords.longitude);
-            //console.log('User position is:', pos.coords);
-            //document.querySelector('.user-pos').innerText =
-            //    `Latitude: ${pos.coords.latitude} - Longitude: ${pos.coords.longitude}`
+            mapService.initMap(pos.coords.latitude, pos.coords.longitude);
         })
         .catch(err => {
             var locationError = document.getElementById("locationError");
@@ -64,56 +68,15 @@ function onGetUserPos() {
             }
         })
 }
+
 function onPanTo() {
+    //debugger
     console.log('Panning the Map');
     mapService.panTo(35.6895, 139.6917);
 }
 
 
-
-function initMap(lat, lng) {
-    //renderPlaceTbale()
-    console.log('lat', lat);
-    console.log('lng', lng);
-    var elMap = document.querySelector('#map');
-    var options = {
-        center: { lat, lng },
-        zoom: 15
-    };
-
-    const map = new google.maps.Map(
-        elMap,
-        options
-    )
-
-    new google.maps.Marker({
-        position: { lat, lng },
-        map,
-        title: 'your Location!'
-    });
-
-
-    map.addListener("click", (e) => {
-        onAddPlace(e.latLng.lat(), e.latLng.lng())
-        placeMarkerAndPanTo(e.latLng, map);
-    });
-
-    //map.addListener("click", (mapsMouseEvent) => {
-    //    console.log(mapsMouseEvent.latLng);
-    //});
-
-}
-
-
-function onAddPlace(lat, lng) {
-    var name = prompt('enter the place name')
-    if (!name) return
-    locService.addPlace(lat, lng, name)
-    renderPlaceTbale()
-}
-
-
-function renderPlaceTbale() {
+function renderPlaceTable() {
     var gPlace = getPlaceTbale()
     var strHTMLs = ''
     strHTMLs += gPlace.map(place => {

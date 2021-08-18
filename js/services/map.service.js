@@ -1,26 +1,49 @@
-
+import { locService } from './loc.service.js'
 
 export const mapService = {
     initMap,
     addMarker,
-    panTo
+    panTo,
+    getMap
 }
-
 var gMap;
+var gCurrLoc;
+window.gMap = gMap;
 
-function initMap(lat = 32.0749831, lng = 34.9120554) {
+function initMap(cb,lat = 32.0749831, lng = 34.9120554) {
     console.log('InitMap');
     return _connectGoogleApi()
         .then(() => {
-            console.log('google available');
             gMap = new google.maps.Map(
-                document.querySelector('#map'), {
-                center: { lat, lng },
-                zoom: 15
-            })
-            console.log('Map!', gMap);
+                document.querySelector('#map'),
+                {
+                    center: { lat, lng },
+                    zoom: 15
+                }
+            )
+
+            gMap.addListener("click", (e) => {
+                gCurrLoc = {lat: e.latLng.lat(), lng: e.latLng.lng()}
+                locService.addPlace({lat: e.latLng.lat(), lng: e.latLng.lng()},cb)
+                cb(gCurrLoc);
+                
+                //placeMarkerAndPanTo(e.latLng, map);
+            });
         })
 }
+
+function addPlace(lat, lng) {
+    var name = prompt('enter the place name')
+    if (!name) return
+    locService.saveAddPlace(lat, lng, name)
+    renderPlaceTbale()
+}
+
+
+function getMap() {
+    return gMap
+}
+
 
 function addMarker(loc) {
     var marker = new google.maps.Marker({
@@ -32,11 +55,10 @@ function addMarker(loc) {
 }
 
 function panTo(lat, lng) {
+    debugger
     var laLatLng = new google.maps.LatLng(lat, lng);
     gMap.panTo(laLatLng);
 }
-
-
 
 function _connectGoogleApi() {
     if (window.google) return Promise.resolve()
