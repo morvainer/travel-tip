@@ -72,14 +72,9 @@ function onPanTo() {
 }
 
 
-function onGetMyLoc() {
-
-}
-
-
 
 function initMap(lat, lng) {
-    //renderPlaceTbale()
+    renderPlaceTbale()
     console.log('lat', lat);
     console.log('lng', lng);
     var elMap = document.querySelector('#map');
@@ -111,5 +106,23 @@ function initMap(lat, lng) {
     map.addListener("click", (mapsMouseEvent) => {
         console.log(mapsMouseEvent.latLng);
     });
+
+}
+
+
+
+function renderPlaceTbale() {
+    var gPlace = getPlaceTbale()
+    var strHTMLs = ''
+    strHTMLs += gPlace.map(place => {
+        return `<tr>
+        <td>${place.name}</td>
+        <td>${place.lat}</td>
+        <td>${place.lng}</td>
+        <td onClick="onRemovePlace(${place.id})"><img src='img/close.png'></td>
+        </tr>
+`
+    }).join('')
+    document.querySelector('tbody').innerHTML = strHTMLs
 
 }
