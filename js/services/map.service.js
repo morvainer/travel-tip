@@ -10,7 +10,7 @@ var gMap;
 var gCurrLoc;
 window.gMap = gMap;
 
-function initMap(cb,lat = 32.0749831, lng = 34.9120554) {
+function initMap(cb, lat = 32.0749831, lng = 34.9120554) {
     console.log('InitMap');
     return _connectGoogleApi()
         .then(() => {
@@ -23,21 +23,17 @@ function initMap(cb,lat = 32.0749831, lng = 34.9120554) {
             )
 
             gMap.addListener("click", (e) => {
-                gCurrLoc = {lat: e.latLng.lat(), lng: e.latLng.lng()}
-                locService.addPlace({lat: e.latLng.lat(), lng: e.latLng.lng()},cb)
-                cb(gCurrLoc);
-                
+                let locName = prompt ('Enter Location Name');
+                gCurrLoc = {name: locName, lat: e.latLng.lat(), lng: e.latLng.lng() }
+                // locService.addPlace({lat: e.latLng.lat(), lng: e.latLng.lng()},cb)
+                cb(gCurrLoc);// sends an object with position
+
                 //placeMarkerAndPanTo(e.latLng, map);
             });
         })
 }
 
-function addPlace(lat, lng) {
-    var name = prompt('enter the place name')
-    if (!name) return
-    locService.saveAddPlace(lat, lng, name)
-    renderPlaceTbale()
-}
+
 
 
 function getMap() {

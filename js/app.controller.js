@@ -10,14 +10,14 @@ console.log('hi');
 
 function onInit() {
     //debugger
-    mapService.initMap(renderCurrLoc)
+    mapService.initMap(renderPosList)
         .then(() => {
             console.log('Map is ready');
         })
         .catch(() => console.log('Error: cannot init map'));
 }
 
-function renderCurrLoc(loc){
+function renderCurrLoc(loc) {
     console.log(loc);
     document.querySelector('.loc-name span').innerHTML = loc
 }
@@ -76,18 +76,38 @@ function onPanTo() {
 }
 
 
-function renderPlaceTable() {
-    var gPlace = getPlaceTbale()
-    var strHTMLs = ''
-    strHTMLs += gPlace.map(place => {
-        return `<tr>
-        <td>${place.name}</td>
-        <td>${place.lat}</td>
-        <td>${place.lng}</td>
-        <td onClick="onRemovePlace(${place.id})"><img src='img/close.png'></td>
-        </tr>
-`
-    }).join('')
-    document.querySelector('tbody').innerHTML = strHTMLs
+// function renderPlaceTable(currLoc) {
+//     var gPlace = getPlaceTbale()
+//     var strHTMLs = ''
+//     strHTMLs += gPlace.map(place => {
+//         return `<tr>
+//         <td>${place.name}</td>
+//         <td>${place.lat}</td>
+//         <td>${place.lng}</td>
+//         <td onClick="onRemovePlace(${place.id})"><img src='img/close.png'></td>
+//         </tr>
+// `
+//     }).join('')
+//     document.querySelector('tbody').innerHTML = strHTMLs
 
+// }
+
+
+function renderPosList(currLoc) {
+    //gets an object with position
+    console.log('rendering');
+    // var places = loadFromStorage(PLACES_KEY);
+    // console.log('place is:', places);
+    // var strHtmls = places.map(function (place) {
+    var strHtml = `<tr>
+ <td>${currLoc.name}</td>
+ <td>${currLoc.lat}</td>
+ <td>${currLoc.lng}</td>
+ <td><button onclick="onDeletePos()"> delete </button></td>
+ </tr>`
+
+    var elPosTableBody = document.querySelector('.position-table-body');
+    elPosTableBody.innerHTML += strHtml;
+    // });
+    // elPosTableBody.innerHTML = strHtmls.join('');
 }

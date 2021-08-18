@@ -26,6 +26,12 @@ function getLocs() {
     });
 }
 
+// function addPlace(lat, lng) {
+//     var name = prompt('enter the place name')
+//     if (!name) return
+//     locService.saveAddPlace(lat, lng, name)
+//     renderPlaceTbale()
+// }
 
 function saveAddPlace(lat, lng, name) {
     var newPlace = createPlace(lat, lng, name);
