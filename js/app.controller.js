@@ -6,7 +6,7 @@ window.onAddMarker = onAddMarker;
 window.onPanTo = onPanTo;
 window.onGetLocs = onGetLocs;
 window.onGetUserPos = onGetUserPos;
-
+console.log('hi');
 function onInit() {
     mapService.initMap()
         .then(() => {
