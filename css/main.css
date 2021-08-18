@@ -7,7 +7,7 @@ button {
 }
 
 .main-container {
-    max-width: 1000px;
+    max-width: 1100px;
     max-height: 800px;
     background-color: coral;
     display: grid;
@@ -28,7 +28,8 @@ button {
 .loc-name{
     display: inline;
     grid-row: 2;
-    grid-column: 1
+    grid-column: 1;
+    
 }
 .copy-loc{
     grid-row: 2;
@@ -37,10 +38,12 @@ button {
     height: 30px;
 }
 .loc-table {
-    width: 400px;
+    width: 500px;
     height: 400px;
     margin-top: 10px;
     background-color: rgb(114, 154, 207);
+    margin-right: 50px;
+    margin-left: 10px;
 }
 table{
     width: 100%;

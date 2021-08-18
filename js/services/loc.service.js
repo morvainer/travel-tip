@@ -1,4 +1,5 @@
 import { storageService } from './storage.service.js'
+// import { mapService } from './map.service.js'
 
 let gPlaces = []
 let gPlaceId = 1
@@ -41,6 +42,13 @@ function getLocs() {
 //     locService.saveAddPlace(lat, lng, name)
 //     renderPlaceTbale()
 // }
+function panPos(placeId){
+    var placeIdx = gPlaces.findIndex(function (place) {// finds the index of the book we want to delete
+        return placeId === place.id;
+    });
+    panTo(lat, lng)
+
+}
 function deletePos(placeId){
     // debugger;
     // let places = getPlaces();

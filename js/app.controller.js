@@ -7,6 +7,7 @@ window.onPanTo = onPanTo;
 window.onGetLocs = onGetLocs;
 window.onGetUserPos = onGetUserPos;
 window.onDeletePos = onDeletePos;
+window.onPanPos = onPanPos;
 console.log('hi');
 
 function onInit() {
@@ -72,7 +73,7 @@ function onGetUserPos() {
 }
 
 function onPanTo() {
-    debugger
+    // debugger
     let keySearch =document.querySelector("[name='search-box']").value
     mapService.getUserChosenPos(keySearch)
         .then((res) => mapService.panTo(res.lat, res.lng)
@@ -96,6 +97,13 @@ function onPanTo() {
 
 // }
 
+function onPanPos(placeId) {
+    console.log('paning');
+    // debugger;
+    mapService.panPos(placeId);
+    // renderPosTable();
+
+}
 function onDeletePos(placeId) {
     console.log('deleteing');
     // debugger;
@@ -113,6 +121,7 @@ function renderPosTable(){
         <td>${place.lat}</td>
         <td>${place.lng}</td>
         <td><button onclick="onDeletePos('${place.id}')"> delete </button></td>
+        <td><button onclick="onPanPos('${place.id}')"> GO </button></td>
         </tr>`
     });
        //  ${currLoc.id}
@@ -133,6 +142,7 @@ function renderPosList(currLoc) {
  <td>${currLoc.lat}</td>
  <td>${currLoc.lng}</td>
  <td><button onclick="onDeletePos('${currLoc.id}')"> delete </button></td>
+ <td><button onclick="onPanPos('${currLoc.id}')"> GO </button></td>
  </tr>`
  console.log('the curr loc is',currLoc);
 //  ${currLoc.id}

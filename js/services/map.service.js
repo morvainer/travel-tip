@@ -6,14 +6,15 @@ export const mapService = {
     addMarker,
     panTo,
     getMap,
-    getUserChosenPos
+    getUserChosenPos,
+    panPos,
 }
 var gMap;
 var gCurrLoc;
 window.gMap = gMap;
 
 function initMap(cb, lat = 32.0749831, lng = 34.9120554) {
-    debugger
+    // debugger
     console.log('InitMap');
     return _connectGoogleApi()
         .then(() => {
@@ -23,7 +24,7 @@ function initMap(cb, lat = 32.0749831, lng = 34.9120554) {
                     center: { lat, lng },
                     zoom: 15
                 }
-                
+
             )
 
             gMap.addListener("click", (e) => {
@@ -45,7 +46,14 @@ function initMap(cb, lat = 32.0749831, lng = 34.9120554) {
 }
 
 
+function panPos(placeId) {
+    var places = locService.getPlaces();
+    var place = places.find(function (place) {// finds the index of the book we want to delete
+        return placeId === place.id;
+    });
+    panTo(place.lat, place.lng)
 
+}
 
 function getMap() {
     return gMap
@@ -83,7 +91,7 @@ function _connectGoogleApi() {
 
 function getUserChosenPos(keySearch) {
     return axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${keySearch}&key=AIzaSyDZfisC7PtmNg006K52KH5iJ3bERQWOP-o`)
-    .then(res => res.data.results[0].geometry.location)
+        .then(res => res.data.results[0].geometry.location)
         .then(
             res => res
         )
