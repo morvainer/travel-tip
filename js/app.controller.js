@@ -6,6 +6,7 @@ window.onAddMarker = onAddMarker;
 window.onPanTo = onPanTo;
 window.onGetLocs = onGetLocs;
 window.onGetUserPos = onGetUserPos;
+window.onDeletePos = onDeletePos;
 console.log('hi');
 
 function onInit() {
@@ -47,6 +48,7 @@ function onGetLocs() {
 function onGetUserPos() {
     getPosition()
         .then(pos => {
+            // debugger
             console.log(pos);
             mapService.initMap(renderPosList ,pos.coords.latitude, pos.coords.longitude);
         })
@@ -78,6 +80,44 @@ function onPanTo() {
 }
 
 
+// function renderPlaceTable(currLoc) {
+//     var gPlace = getPlaceTbale()
+//     var strHTMLs = ''
+//     strHTMLs += gPlace.map(place => {
+//         return `<tr>
+//         <td>${place.name}</td>
+//         <td>${place.lat}</td>
+//         <td>${place.lng}</td>
+//         <td onClick="onRemovePlace(${place.id})"><img src='img/close.png'></td>
+//         </tr>
+// `
+//     }).join('')
+//     document.querySelector('tbody').innerHTML = strHTMLs
+
+// }
+
+function onDeletePos(placeId) {
+    deletePos(placeId);
+    renderPosTable();
+
+}
+function renderPosTable(){
+    var places = getPlaces();
+    console.log('place is:', places);
+    var strHtmls = places.map(function (place) {
+        var strHtml = `<tr>
+        <td>${place.name}</td>
+        <td>${place.lat}</td>
+        <td>${place.lng}</td>
+        <td><button onclick="onDeletePos(${place.id})"> delete </button></td>
+        </tr>`
+       //  ${currLoc.id}
+           var elPosTableBody = document.querySelector('.position-table-body');
+        //    elPosTableBody.innerHTML = strHtml;
+           elPosTableBody.innerHTML = strHtmls.join('');
+           });
+
+}
 function renderPosList(currLoc) {
     //gets an object with position
     console.log('rendering');
@@ -88,9 +128,9 @@ function renderPosList(currLoc) {
  <td>${currLoc.name}</td>
  <td>${currLoc.lat}</td>
  <td>${currLoc.lng}</td>
- <td><button onclick="onDeletePos()"> delete </button></td>
+ <td><button onclick="onDeletePos(${currLoc.id})"> delete </button></td>
  </tr>`
-
+//  ${currLoc.id}
     var elPosTableBody = document.querySelector('.position-table-body');
     elPosTableBody.innerHTML += strHtml;
     // });

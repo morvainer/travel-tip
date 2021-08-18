@@ -1,4 +1,5 @@
 import { locService } from './loc.service.js'
+import { storageService } from './storage.service.js'
 
 export const mapService = {
     initMap,
@@ -19,13 +20,19 @@ function initMap(cb, lat = 32.0749831, lng = 34.9120554) {
                 document.querySelector('#map'),
                 {
                     center: { lat, lng },
-                    zoom: 15
+                    zoom: 3
                 }
             )
 
             gMap.addListener("click", (e) => {
                 let locName = prompt('Enter Location Name');
-                gCurrLoc = { name: locName, lat: e.latLng.lat(), lng: e.latLng.lng() }
+                gCurrLoc = { id: locService.gPlaceId++, name: locName, lat: e.latLng.lat(), lng: e.latLng.lng() }
+                let places = locService.getPlaces();
+                places.push(gCurrLoc);
+                // locService.gPlaces.push(gCurrLoc);
+                // console.log(locService.gPlaces);
+                storageService.saveToStorage('places_DB', places)
+                // locService._savegPlaceToStorage();
                 // locService.addPlace({lat: e.latLng.lat(), lng: e.latLng.lng()},cb)
                 cb(gCurrLoc);// sends an object with position
 
@@ -52,7 +59,7 @@ function addMarker(loc) {
 }
 
 function panTo(lat, lng) {
-    debugger
+    // debugger
     var laLatLng = new google.maps.LatLng(lat, lng);
     gMap.panTo(laLatLng);
 }
