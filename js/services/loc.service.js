@@ -9,6 +9,7 @@ export const locService = {
     getPlaces,
     _savegPlaceToStorage,
     deletePos,
+    makeId,
     gPlaceId,
     gPlaces
 }
@@ -41,12 +42,13 @@ function getLocs() {
 //     renderPlaceTbale()
 // }
 function deletePos(placeId){
+    // debugger;
     // let places = getPlaces();
     var placeIdx = gPlaces.findIndex(function (place) {// finds the index of the book we want to delete
         return placeId === place.id;
     });
     gPlaces.splice(placeIdx, 1)
-    _savePlacesToStorage();
+    _savegPlaceToStorage();
 
 }
 function saveAddPlace(lat, lng, name) {
@@ -72,6 +74,7 @@ function _createPlaces(lat, lng, name) {
     var loadedPlaces = storageService.loadFromStorage(KEY)
     console.log(loadedPlaces);
     if (!loadedPlaces) {
+        gPlaceId =0
         loadedPlaces = []
     }
     gPlaces = loadedPlaces;
@@ -81,4 +84,13 @@ function _createPlaces(lat, lng, name) {
 function _savegPlaceToStorage() {
     console.log('saving to storage');
     storageService.saveToStorage(KEY, gPlaces)
+}
+
+function makeId(length = 6) {
+    var txt = '';
+    var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    for (var i = 0; i < length; i++) {
+        txt += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+    return txt;
 }

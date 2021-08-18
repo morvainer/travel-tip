@@ -21,11 +21,13 @@ function initMap(cb, lat = 32.0749831, lng = 34.9120554) {
                     center: { lat, lng },
                     zoom: 3
                 }
+                
             )
 
             gMap.addListener("click", (e) => {
+                // debugger;
                 let locName = prompt('Enter Location Name');
-                gCurrLoc = { id: locService.gPlaceId++, name: locName, lat: e.latLng.lat(), lng: e.latLng.lng() }
+                gCurrLoc = { id: locService.makeId(), name: locName, lat: e.latLng.lat(), lng: e.latLng.lng() }
                 let places = locService.getPlaces();
                 places.push(gCurrLoc);
                 // locService.gPlaces.push(gCurrLoc);

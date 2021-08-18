@@ -94,28 +94,32 @@ function onPanTo() {
 // }
 
 function onDeletePos(placeId) {
-    deletePos(placeId);
+    console.log('deleteing');
+    // debugger;
+    locService.deletePos(placeId);
     renderPosTable();
 
 }
 function renderPosTable(){
-    var places = getPlaces();
+    var places = locService.getPlaces();
     console.log('place is:', places);
     var strHtmls = places.map(function (place) {
-        var strHtml = `<tr>
+        
+        return `<tr>
         <td>${place.name}</td>
         <td>${place.lat}</td>
         <td>${place.lng}</td>
-        <td><button onclick="onDeletePos(${place.id})"> delete </button></td>
+        <td><button onclick="onDeletePos('${place.id}')"> delete </button></td>
         </tr>`
+    });
        //  ${currLoc.id}
            var elPosTableBody = document.querySelector('.position-table-body');
         //    elPosTableBody.innerHTML = strHtml;
            elPosTableBody.innerHTML = strHtmls.join('');
-           });
 
 }
 function renderPosList(currLoc) {
+    //   debugger;
     //gets an object with position
     console.log('rendering');
     // var places = loadFromStorage(PLACES_KEY);
@@ -125,8 +129,9 @@ function renderPosList(currLoc) {
  <td>${currLoc.name}</td>
  <td>${currLoc.lat}</td>
  <td>${currLoc.lng}</td>
- <td><button onclick="onDeletePos(${currLoc.id})"> delete </button></td>
+ <td><button onclick="onDeletePos('${currLoc.id}')"> delete </button></td>
  </tr>`
+ console.log('the curr loc is',currLoc);
 //  ${currLoc.id}
     var elPosTableBody = document.querySelector('.position-table-body');
     elPosTableBody.innerHTML += strHtml;
