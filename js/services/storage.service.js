@@ -4,6 +4,8 @@ export const storageService = {
 }
 
 function saveToStorage(key, val) {
+    // debugger;
+    console.log('saving on storage service');
     localStorage.setItem(key, JSON.stringify(val))
 }
 

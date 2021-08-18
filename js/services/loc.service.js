@@ -1,17 +1,25 @@
 import { storageService } from './storage.service.js'
 
+let gPlaces = []
+let gPlaceId = 1
 
 export const locService = {
     getLocs,
-    saveAddPlace
+    saveAddPlace,
+    getPlaces,
+    _savegPlaceToStorage,
+    deletePos,
+    gPlaceId,
+    gPlaces
 }
-let gPlaces = []
-let gPlaceId = 1
 const KEY = 'places_DB'
 _createPlaces()
 
 
-
+function getPlaces(){
+    console.log('getting places');
+    return gPlaces;
+}
 
 const locs = [
     { name: 'Greatplace', lat: 32.047104, lng: 34.832384 },
@@ -32,7 +40,15 @@ function getLocs() {
 //     locService.saveAddPlace(lat, lng, name)
 //     renderPlaceTbale()
 // }
+function deletePos(placeId){
+    // let places = getPlaces();
+    var placeIdx = gPlaces.findIndex(function (place) {// finds the index of the book we want to delete
+        return placeId === place.id;
+    });
+    gPlaces.splice(placeIdx, 1)
+    _savePlacesToStorage();
 
+}
 function saveAddPlace(lat, lng, name) {
     var newPlace = createPlace(lat, lng, name);
     gPlaces.unshift(newPlace)
@@ -63,5 +79,6 @@ function _createPlaces(lat, lng, name) {
 }
 
 function _savegPlaceToStorage() {
+    console.log('saving to storage');
     storageService.saveToStorage(KEY, gPlaces)
 }
