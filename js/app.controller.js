@@ -39,15 +39,77 @@ function onGetLocs() {
 function onGetUserPos() {
     getPosition()
         .then(pos => {
-            console.log('User position is:', pos.coords);
-            document.querySelector('.user-pos').innerText =
-                `Latitude: ${pos.coords.latitude} - Longitude: ${pos.coords.longitude}`
+            debugger
+            console.log(pos);
+            initMap(pos.coords.latitude, pos.coords.longitude);
+
+
+            //console.log('User position is:', pos.coords);
+            //document.querySelector('.user-pos').innerText =
+            //    `Latitude: ${pos.coords.latitude} - Longitude: ${pos.coords.longitude}`
         })
         .catch(err => {
-            console.log('err!!!', err);
+            var locationError = document.getElementById("locationError");
+            switch (err.code) {
+                case 0:
+                    locationError.innerHTML = "There was an error while retrieving your location: " + error.message;
+                    break;
+                case 1:
+                    locationError.innerHTML = "The user didn't allow this page to retrieve a location.";
+                    break;
+                case 2:
+                    locationError.innerHTML = "The browser was unable to determine your location: " + error.message;
+                    break;
+                case 3:
+                    locationError.innerHTML = "The browser timed out before retrieving the location.";
+                    break;
+            }
         })
 }
 function onPanTo() {
     console.log('Panning the Map');
     mapService.panTo(35.6895, 139.6917);
+}
+
+
+function onGetMyLoc() {
+
+}
+
+
+
+function initMap(lat, lng) {
+    //renderPlaceTbale()
+    console.log('lat', lat);
+    console.log('lng', lng);
+    var elMap = document.querySelector('#map');
+    var options = {
+        center: { lat, lng },
+        zoom: 15
+    };
+
+    const map = new google.maps.Map(
+        elMap,
+        options
+    )
+
+    new google.maps.Marker({
+        position: { lat, lng },
+        map,
+        title: 'Hello World!'
+    });
+
+
+    map.addListener("click", (e) => {
+        console.log();
+        console.log();
+        debugger
+        onAddPlace(e.latLng.lat(), e.latLng.lng())
+        placeMarkerAndPanTo(e.latLng, map);
+    });
+
+    map.addListener("click", (mapsMouseEvent) => {
+        console.log(mapsMouseEvent.latLng);
+    });
+
 }
