@@ -1,5 +1,6 @@
 export const locService = {
-    getLocs
+    getLocs,
+    getPlaceTbale
 }
 
 
@@ -16,3 +17,6 @@ function getLocs() {
     });
 }
 
+function getPlaceTbale(){
+    
+}
