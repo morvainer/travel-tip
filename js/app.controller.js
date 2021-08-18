@@ -18,6 +18,7 @@ function onInit() {
         .catch(() => console.log('Error: cannot init map'));
 }
 
+
 function renderCurrLoc(loc) {
     console.log(loc);
     document.querySelector('.loc-name span').innerHTML = loc
@@ -49,7 +50,7 @@ function onGetUserPos() {
         .then(pos => {
             // debugger
             console.log(pos);
-            mapService.initMap(pos.coords.latitude, pos.coords.longitude);
+            mapService.initMap(renderPosList ,pos.coords.latitude, pos.coords.longitude);
         })
         .catch(err => {
             var locationError = document.getElementById("locationError");
@@ -71,9 +72,11 @@ function onGetUserPos() {
 }
 
 function onPanTo() {
-    //debugger
-    console.log('Panning the Map');
-    mapService.panTo(35.6895, 139.6917);
+    debugger
+    let keySearch =document.querySelector("[name='search-box']").value
+    mapService.getUserChosenPos(keySearch)
+        .then((res) => mapService.panTo(res.lat, res.lng)
+        )
 }
 
 

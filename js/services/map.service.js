@@ -5,13 +5,15 @@ export const mapService = {
     initMap,
     addMarker,
     panTo,
-    getMap
+    getMap,
+    getUserChosenPos
 }
 var gMap;
 var gCurrLoc;
 window.gMap = gMap;
 
 function initMap(cb, lat = 32.0749831, lng = 34.9120554) {
+    debugger
     console.log('InitMap');
     return _connectGoogleApi()
         .then(() => {
@@ -19,7 +21,7 @@ function initMap(cb, lat = 32.0749831, lng = 34.9120554) {
                 document.querySelector('#map'),
                 {
                     center: { lat, lng },
-                    zoom: 3
+                    zoom: 15
                 }
                 
             )
@@ -78,3 +80,13 @@ function _connectGoogleApi() {
         elGoogleApi.onerror = () => reject('Google script failed to load')
     })
 }
+
+function getUserChosenPos(keySearch) {
+    return axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${keySearch}&key=AIzaSyDZfisC7PtmNg006K52KH5iJ3bERQWOP-o`)
+    .then(res => res.data.results[0].geometry.location)
+        .then(
+            res => res
+        )
+
+}
+
